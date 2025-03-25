@@ -1,10 +1,13 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from '@/components/Logo';
 import CheckoutForm from '@/components/CheckoutForm';
 import FooterLinks from '@/components/FooterLinks';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 const Index: React.FC = () => {
+  const [isLegalInfoOpen, setIsLegalInfoOpen] = useState(false);
+  
   return (
     <div className="flex flex-col min-h-screen">
       <header className="py-6 bg-black text-white w-full">
@@ -23,26 +26,32 @@ const Index: React.FC = () => {
           </a>
           
           <CheckoutForm />
-          
-          <div className="container mx-auto text-center">
-            <FooterLinks />
-          </div>
         </div>
       </main>
       
       <footer className="bg-gray-100 py-6">
         <div className="container mx-auto">
-          <div className="flex items-center justify-between">
+          <div className="mb-4">
             <div 
-              className="checkout-section-title !mb-0 text-sm cursor-pointer"
-              onClick={() => console.log("Open legal info")}
+              className="checkout-section-title cursor-pointer"
+              onClick={() => setIsLegalInfoOpen(!isLegalInfoOpen)}
             >
               <span>INFORMATIONS LÉGALES</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              {isLegalInfoOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+            </div>
+            
+            <div className={`accordion-content ${isLegalInfoOpen ? 'max-h-[1000px]' : 'max-h-0'}`}>
+              <div className="p-4 text-sm text-gray-600 space-y-2">
+                <p>SAS Outlet en live - Capital: 10 000€</p>
+                <p>RCS Paris 000 000 000</p>
+                <p>Siège social: 123 Avenue de la Mode, 75001 Paris</p>
+                <p>TVA intracommunautaire: FR0000000000</p>
+                <p>Conformément à la loi "Informatique et Libertés" du 6 janvier 1978 modifiée, vous disposez d'un droit d'accès, de modification et de suppression des données vous concernant.</p>
+              </div>
             </div>
           </div>
+          
+          <FooterLinks />
         </div>
       </footer>
     </div>

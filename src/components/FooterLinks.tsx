@@ -6,7 +6,7 @@ const FooterLinks: React.FC = () => {
   const isMobile = useIsMobile();
   
   return (
-    <div className={`mt-8 mb-4 text-xs text-gray-500 ${isMobile ? 'flex flex-col space-y-2' : 'flex justify-center'}`}>
+    <div className={`py-4 text-xs text-gray-500 bg-gray-200 text-center ${isMobile ? 'flex flex-col space-y-2' : 'flex justify-center'}`}>
       {isMobile ? (
         <>
           <a href="#" className="hover:text-gray-700 transition-colors">CGV</a>
