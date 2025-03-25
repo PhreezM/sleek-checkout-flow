@@ -4,6 +4,7 @@ import Logo from '@/components/Logo';
 import CheckoutForm from '@/components/CheckoutForm';
 import FooterLinks from '@/components/FooterLinks';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Index: React.FC = () => {
   const [isLegalInfoOpen, setIsLegalInfoOpen] = useState(false);
@@ -18,12 +19,12 @@ const Index: React.FC = () => {
       
       <main className="flex-grow pt-8">
         <div className="container mx-auto">
-          <a 
-            href="#" 
+          <Link 
+            to="/mescommandes" 
             className="inline-block mb-6 text-sm bg-black text-white py-2 px-4 rounded-md hover:bg-black/90 transition-all ml-4 md:ml-0"
           >
             Mes commandes
-          </a>
+          </Link>
           
           <CheckoutForm />
         </div>
@@ -31,12 +32,12 @@ const Index: React.FC = () => {
       
       <footer className="bg-gray-100 py-6">
         <div className="container mx-auto">
-          <div className="mb-4">
+          <div className="mb-4 mx-auto max-w-xl px-4">
             <div 
-              className="checkout-section-title cursor-pointer"
+              className="bg-white rounded-md p-4 border border-border flex justify-between items-center cursor-pointer"
               onClick={() => setIsLegalInfoOpen(!isLegalInfoOpen)}
             >
-              <span>INFORMATIONS LÉGALES</span>
+              <span className="font-medium">INFORMATIONS LÉGALES</span>
               {isLegalInfoOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </div>
             

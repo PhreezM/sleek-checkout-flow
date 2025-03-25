@@ -4,6 +4,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import OrderSummary from './OrderSummary';
 import ShippingMethod from './ShippingMethod';
 import PaymentMethod from './PaymentMethod';
+import { Link } from 'react-router-dom';
 
 const CheckoutForm: React.FC = () => {
   const [isAddressSectionOpen, setIsAddressSectionOpen] = useState(true);
@@ -118,7 +119,7 @@ const CheckoutForm: React.FC = () => {
           onChange={() => setTermsAccepted(!termsAccepted)}
         />
         <label htmlFor="terms" className="text-sm">
-          J'accepte les <a href="/cgv" className="text-blue-600 hover:underline">conditions générales de ventes</a>
+          J'accepte les <Link to="/cgv" className="text-blue-600 hover:underline">conditions générales de ventes</Link>
         </label>
       </div>
       
