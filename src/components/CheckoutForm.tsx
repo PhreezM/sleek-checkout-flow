@@ -118,7 +118,7 @@ const CheckoutForm: React.FC = () => {
           onChange={() => setTermsAccepted(!termsAccepted)}
         />
         <label htmlFor="terms" className="text-sm">
-          J'accepte les <a href="#" className="text-blue-600 hover:underline">conditions générales de ventes</a>
+          J'accepte les <a href="/cgv" className="text-blue-600 hover:underline">conditions générales de ventes</a>
         </label>
       </div>
       

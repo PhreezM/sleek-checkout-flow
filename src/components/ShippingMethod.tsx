@@ -8,41 +8,64 @@ interface ShippingMethodProps {
   onSelectShippingPoint: () => void;
 }
 
+// Declare jQuery as a global to avoid TypeScript errors
+declare global {
+  interface Window {
+    $: any;
+    jQuery: any;
+  }
+}
+
 const ShippingMethod: React.FC<ShippingMethodProps> = ({ shippingCost, onSelectShippingPoint }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [widgetLoaded, setWidgetLoaded] = useState(false);
 
   useEffect(() => {
     if (isDialogOpen && !widgetLoaded) {
-      // Load the Mondial Relay widget script
-      const script = document.createElement('script');
-      script.src = 'https://widget.mondialrelay.com/parcelshop-picker/jquery.plugin.mondialrelay.parcelshoppicker.min.js';
-      script.async = true;
-      script.onload = () => {
-        setWidgetLoaded(true);
-        
-        // Initialize the widget when the script is loaded
-        if (window.$ && window.$.fn.MRParcelShopPicker) {
-          window.$(document).ready(function () {
-            window.$("#PluginContent").MRParcelShopPicker({
-              Target: "#ParcelShopPickerResult",
-              Brand: "BDTEST  ",
-              Country: "FR",
-              PostCode: "",
-              ColLivMod: "24R",
-              NbResults: 7,
-              Responsive: true,
-              ShowResultsOnMap: true,
-              OnParcelShopSelected: function (data) {
-                console.log("Selected parcel shop:", data);
-                onSelectShippingPoint();
-                setIsDialogOpen(false);
-              }
+      // First, load jQuery if it's not already loaded
+      const jqueryScript = document.createElement('script');
+      jqueryScript.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
+      jqueryScript.async = true;
+      jqueryScript.onload = () => {
+        // Then load the Mondial Relay widget script
+        const widgetScript = document.createElement('script');
+        widgetScript.src = 'https://widget.mondialrelay.com/parcelshop-picker/jquery.plugin.mondialrelay.parcelshoppicker.min.js';
+        widgetScript.async = true;
+        widgetScript.onload = () => {
+          setWidgetLoaded(true);
+          
+          // Initialize the widget when the script is loaded
+          if (window.$ && window.$.fn.MRParcelShopPicker) {
+            window.$(document).ready(function () {
+              window.$("#PluginContent").MRParcelShopPicker({
+                Target: "#ParcelShopPickerResult",
+                Brand: "CC23GIF2", // Updated to use the provided brand code
+                Country: "FR",
+                PostCode: "",
+                ColLivMod: "24R",
+                NbResults: 7,
+                Responsive: true,
+                ShowResultsOnMap: true,
+                OnParcelShopSelected: function (data: any) {
+                  console.log("Selected parcel shop:", data);
+                  onSelectShippingPoint();
+                  setIsDialogOpen(false);
+                }
+              });
             });
-          });
+          }
+        };
+        document.body.appendChild(widgetScript);
+      };
+      document.body.appendChild(jqueryScript);
+      
+      // Clean up function to remove scripts when component unmounts
+      return () => {
+        document.body.removeChild(jqueryScript);
+        if (document.querySelector('script[src="https://widget.mondialrelay.com/parcelshop-picker/jquery.plugin.mondialrelay.parcelshoppicker.min.js"]')) {
+          document.body.removeChild(document.querySelector('script[src="https://widget.mondialrelay.com/parcelshop-picker/jquery.plugin.mondialrelay.parcelshoppicker.min.js"]')!);
         }
       };
-      document.body.appendChild(script);
     }
   }, [isDialogOpen, widgetLoaded, onSelectShippingPoint]);
 
@@ -83,7 +106,7 @@ const ShippingMethod: React.FC<ShippingMethodProps> = ({ shippingCost, onSelectS
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogContent className="max-w-3xl h-[80vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>Sélectionnez votre point relais ou votre locker</DialogTitle>
+              <DialogTitle className="text-lg font-semibold">Sélectionnez votre point relais ou votre locker</DialogTitle>
             </DialogHeader>
             <div id="PluginContent" className="w-full h-full min-h-[500px]"></div>
             <div id="ParcelShopPickerResult" className="hidden"></div>

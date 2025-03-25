@@ -40,15 +40,15 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ orderTotal, shippingCost })
         <div className="bg-white rounded-md p-4 mb-4 border border-border">
           <div className="mb-3">
             <label className="block text-sm mb-1">Montant (€)</label>
-            <input type="text" className="checkout-input !mb-0" placeholder="100.00 €" />
+            <input type="text" className="w-full rounded-md border border-border px-4 py-2" placeholder="100.00 €" />
           </div>
           <div className="mb-3">
             <label className="block text-sm mb-1">Référence de la commande</label>
-            <input type="text" className="checkout-input !mb-0" placeholder="REF-12345" />
+            <input type="text" className="w-full rounded-md border border-border px-4 py-2" placeholder="REF-12345" />
           </div>
           <div>
             <label className="block text-sm mb-1">Pseudo TikTok</label>
-            <input type="text" className="checkout-input !mb-0" placeholder="@username" />
+            <input type="text" className="w-full rounded-md border border-border px-4 py-2" placeholder="@username" />
           </div>
         </div>
       </div>
